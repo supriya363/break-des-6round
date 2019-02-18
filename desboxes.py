@@ -51,8 +51,19 @@ s8 = [[13, 2, 8, 4, 6, 15, 11, 1, 10, 9, 3, 14, 5, 0, 12, 7],
 
 SBOX = [s1,s2,s3,s4,s5,s6,s7,s8]
 
-def expansion(ri):
-	pass
+def expansion(ri):  #ri is an array of bits = b0,b1,b2...b31
+	res = []
+	res.append(ri[31], ri[0]) # 
+	once = 1
+	for i in range(1,31,2):
+		if once == 1:
+			res.append(ri[i],ri[i+1])
+			once = 2
+		else:
+			res.append(ri[i],ri[i+1],ri[i],ri[i+1])
+			once = 1
+	res.append(ri)
+
 
 def substitute(ei):
 	pass
@@ -66,3 +77,12 @@ def permute(si):
 def round(li, ri):
 	pass
 
+def func(ri):  #returns output xor
+	pass
+
+def testProg():
+	inp = "abcdefgh"
+	inp = list(inp)
+	print(inp)
+
+testProg()
