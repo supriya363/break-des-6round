@@ -81,8 +81,14 @@ def xor(input1, input2):
 	return res
 
 
-def permute(si):
-	pass
+def permute(inp):
+	res = [0]*32
+	print(inp[15])
+	k = 0
+	for i in PBOX:
+		res[k] = inp[i-1]
+		k+=1
+	return res
 
 def round(li, ri):
 	pass
@@ -100,7 +106,13 @@ def binvalue(val, bitsize): #Return the binary value as a string of the given si
         binval = "0"+binval #Add as many 0 as needed to get the wanted size
     return binval
 
-def expTest():
+def expTest(bitarr): 
+	print(expansion(bitarr))
+
+def permTest(bitarr):
+	print(permute(bitarr))
+
+def testProg():
 	inp = list("abcd") #32bits
 	bval = [ binvalue(i,8) for i in inp]
 	out = []
@@ -110,10 +122,8 @@ def expTest():
 	for ele in out:
 		for j in ele:
 			bitarr.append(j)
-	print(bitarr)
-	print(expansion(bitarr))
+	print("Input: " + str(bitarr))
+	# permTest(bitarr)
 
-def testProg():
-	expTest()
 
 testProg()
