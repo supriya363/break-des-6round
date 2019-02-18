@@ -72,7 +72,19 @@ def expansion(ri):  #ri is an array of bits = b0,b1,b2...b31
 
 
 def substitute(ei):
-	pass
+    outputOfSBox = ''
+    for i in range(0,8):
+        rowIndex_0bit = i * 6;
+        rowIndex_1bit = rowIndex_0bit + 5
+        rowIndex_bit = ei[rowIndex_0bit] + ei[rowIndex_1bit];
+        rowIndex = int(rowIndex_bit,2)
+        coulmnStartIndex = rowIndex_0bit +1;
+        columnIndex = int(''.join(ei[coulmnStartIndex:rowIndex_1bit]),2)
+        sBox = SBOX[i];
+        #print(sBox[rowIndex][columnIndex], "{0:04b}".format(sBox[rowIndex][columnIndex]))
+        outputOfSBox = outputOfSBox + "{0:04b}".format(sBox[rowIndex][columnIndex])
+        #print(outputOfSBox)
+    return outputOfSBox
 
 def xor(input1, input2):
 	res = []
