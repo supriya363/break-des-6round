@@ -1,9 +1,5 @@
 
 
-
-
-
-
 #Permutation Box
 PBOX = [16, 7, 20, 21, 29, 12, 28, 17,
      1, 15, 23, 26, 5, 18, 31, 10,
@@ -54,3 +50,19 @@ s8 = [[13, 2, 8, 4, 6, 15, 11, 1, 10, 9, 3, 14, 5, 0, 12, 7],
  [2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11]]
 
 SBOX = [s1,s2,s3,s4,s5,s6,s7,s8]
+
+def expansion(ri):
+	pass
+
+def substitute(ei):
+	pass
+
+def xor(input1, input2):
+	pass
+
+def permute(si):
+	pass
+
+def round(li, ri):
+	pass
+
