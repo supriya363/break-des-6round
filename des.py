@@ -51,14 +51,35 @@ s8 = [[13, 2, 8, 4, 6, 15, 11, 1, 10, 9, 3, 14, 5, 0, 12, 7],
 
 SBOX = [s1,s2,s3,s4,s5,s6,s7,s8]
 
-def expansion(ri):
-	pass
+def expansion(ri):  #ri is an array of bits = b0,b1,b2...b31
+	res = []
+	res.append(ri[31])
+	res.append(ri[0])
+	once = 1
+	for i in range(1,31,2):
+		if once == 1:
+			res.append(ri[i])
+			res.append(ri[i+1])
+			once = 2
+		else:
+			for j in range(2):
+				res.append(ri[i])
+				res.append(ri[i+1])
+			once = 1
+	res.append(ri[31])
+	res.append(ri[0])
+	return res
+
 
 def substitute(ei):
 	pass
 
 def xor(input1, input2):
-	pass
+	res = []
+	for i in range(len(input1)):
+		res.append(input1[i]^input2[i])
+	return res
+
 
 def permute(si):
 	pass
@@ -66,3 +87,33 @@ def permute(si):
 def round(li, ri):
 	pass
 
+def func(ri):  #returns output xor
+	pass
+
+
+#taken from online resources
+def binvalue(val, bitsize): #Return the binary value as a string of the given size 
+    binval = bin(val)[2:] if isinstance(val, int) else bin(ord(val))[2:]
+    if len(binval) > bitsize:
+        raise "binary value larger than the expected size"
+    while len(binval) < bitsize:
+        binval = "0"+binval #Add as many 0 as needed to get the wanted size
+    return binval
+
+def expTest():
+	inp = list("abcd") #32bits
+	bval = [ binvalue(i,8) for i in inp]
+	out = []
+	for i in bval:
+		out.append(list(i))
+	bitarr = []
+	for ele in out:
+		for j in ele:
+			bitarr.append(j)
+	print(bitarr)
+	print(expansion(bitarr))
+
+def testProg():
+	expTest()
+
+testProg()
