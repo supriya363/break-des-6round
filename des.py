@@ -119,7 +119,21 @@ def binvalue(val, bitsize): #Return the binary value as a string of the given si
     return binval
 
 def convert_xor_to_input(inp):
+	res = expansion(inp)
+	arr = []		#list to store the inputs to S-box in the form ["b0 b1 b2 b3 b4 b5"]
+	inp_length = 6		#Input length to S-box
+	count = 1
+	k = 0			
+	for i in res:
+		while(count <= inp_length):
+			arr[k] = arr[k] + res[i+count]
+			count = count+1
+		k = k+1
+		count = 1
+		i = i + 6
+		arr.append(arr[k])
 
+	return arr
 
 def testProg():
 	inp = list("abcd") #32bits
