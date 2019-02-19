@@ -70,7 +70,7 @@ def expansion(ri):  #ri is an array of bits = b0,b1,b2...b31
 	res.append(ri[0])
 	return res
 
-
+#Should return bit array
 def substitute(ei):
     outputOfSBox = ''
     for i in range(0,8):
@@ -83,7 +83,7 @@ def substitute(ei):
         sBox = SBOX[i];
         #print(sBox[rowIndex][columnIndex], "{0:04b}".format(sBox[rowIndex][columnIndex]))
         outputOfSBox = outputOfSBox + "{0:04b}".format(sBox[rowIndex][columnIndex])
-        #print(outputOfSBox)
+        # print(outputOfSBox)
     return outputOfSBox
 
 def xor(input1, input2):
