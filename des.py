@@ -70,7 +70,7 @@ def expansion(ri):  #ri is an array of bits = b0,b1,b2...b31
 	res.append(ri[0])
 	return res
 
-
+#Should return bit array
 def substitute(ei):
     outputOfSBox = ''
     for i in range(0,8):
@@ -83,27 +83,40 @@ def substitute(ei):
         sBox = SBOX[i];
         #print(sBox[rowIndex][columnIndex], "{0:04b}".format(sBox[rowIndex][columnIndex]))
         outputOfSBox = outputOfSBox + "{0:04b}".format(sBox[rowIndex][columnIndex])
-        #print(outputOfSBox)
-    return outputOfSBox
+        # print(outputOfSBox)
+    return list(outputOfSBox)
 
 def xor(input1, input2):
 	res = []
 	for i in range(len(input1)):
-		res.append(input1[i]^input2[i])
+		xorval = (ord(input1[i])-ord('0'))^(ord(input2[i])-ord('0'))
+		res.append(chr(xorval+ord('0')))
 	return res
 
 
 def permute(inp):
 	res = [0]*32
-	print(inp[15])
 	k = 0
 	for i in PBOX:
 		res[k] = inp[i-1]
 		k+=1
 	return res
 
-def round(li, ri):
-	pass
+def round(li, ri, no_of_rounds):
+	for rnd in range(no_of_rounds):
+		print("----------------------Round---------------------- : %d\n" % (rnd+1))
+		print("Lefthalf: "+ str(li) + "\nRighthalf: " + str(ri))
+		expansion_output = expansion(ri)
+		substitute_output = substitute(expansion_output)
+		permutation_output = permute(substitute_output)
+		print("After expansion: "+str(expansion_output))
+		print("After Substitution" + str(substitute_output))
+		print("After Permutation"+str(permutation_output))
+		xor_with_lefthalf = xor(permutation_output, li)
+		print("After Xoring with left half: " + str(xor_with_lefthalf))
+		print("\n")
+		li = ri
+		ri = xor_with_lefthalf
 
 def func(ri):  #returns output xor
 	pass
@@ -119,6 +132,7 @@ def binvalue(val, bitsize): #Return the binary value as a string of the given si
     return binval
 
 def convert_xor_to_input(inp):
+<<<<<<< HEAD
 	res = expansion(inp)
 	arr = []		#list to store the inputs to S-box in the form ["b0 b1 b2 b3 b4 b5"]
 	inp_length = 6		#Input length to S-box
@@ -134,6 +148,32 @@ def convert_xor_to_input(inp):
 		arr.append(arr[k])
 
 	return arr
+=======
+	pass
+
+def roundTest():
+	l = list("abcd") #64bits
+	r = list("efgh")
+	bval_l = [ binvalue(i,8) for i in l]
+	bval_r = [ binvalue(i,8) for i in r]
+	out_l = []
+	out_r = []
+	for i in bval_l:
+		out_l.append(list(i))
+	for i in bval_r:
+		out_r.append(list(i))
+	bitarr_l = []
+	bitarr_r = []
+	for ele in out_l:
+		for j in ele:
+			bitarr_l.append(j)
+	for ele in out_r:
+		for j in ele:
+			bitarr_r.append(j)
+	print("Input: " + str(bitarr_l)+str(bitarr_r))
+	round(bitarr_l, bitarr_r, 2)
+
+>>>>>>> 504dfcc0a95521c2c8ed20aa83d773f456988d8f
 
 def testProg():
 	inp = list("abcd") #32bits
@@ -150,4 +190,8 @@ def testProg():
 
 
 
+<<<<<<< HEAD
 testProg()
+=======
+roundTest()
+>>>>>>> 504dfcc0a95521c2c8ed20aa83d773f456988d8f
