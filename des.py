@@ -102,6 +102,31 @@ def permute(inp):
 		k+=1
 	return res
 
+def binaryToHex(val):
+    return hex(int(''.join(val),2))[2:]
+
+def hexToBinary(inp):
+    res = bin(int(''.join(inp), 16))[2:]
+    while (len(res) < 4):
+        res = '0' + res
+    return res
+
+def convert_xor_to_input(inp):   #e.g. inp = "0405C000" 
+    arr = list(inp)
+    res = []
+    for i in arr:
+        tmp = list(hexToBinary(i))
+        for j in range(len(tmp)):
+            res.append(tmp[j])
+    res = expansion(res)        #converting the 32 bit input to 48 bit  
+    return res
+
+def convert_input_to_xor(inp):   # Converts 32bit input to xor (e.g. 0405C000)
+    res = []
+    for i in range(0,len(inp),4):
+        res.append(binaryToHex(inp[i:i+4]))
+    return res
+
 def round(li, ri, no_of_rounds):
 	for rnd in range(no_of_rounds):
 		print("----------------------Round---------------------- : %d\n" % (rnd+1))
