@@ -6,7 +6,6 @@ import os
 input_set = ['f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u']
 left_xor = ['0100','0000','0101','1010','0000','0000','0000','0000']
 right_xor = ['0000','0100','0000','0000','0000','0000','0000','0000']
-binary_mapping = []
 
 # Finds the corresponding input having the required xor difference
 # inp is in the form - "8 chars"
