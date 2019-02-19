@@ -51,6 +51,11 @@ def permute(inp):
 		k+=1
 	return res
 
+def inverse_permute(inp):
+	pass
+
+
+
 def binaryToHex(val):
     return hex(int(''.join(val),2))[2:]
 
