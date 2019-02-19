@@ -1,6 +1,6 @@
 from des import *
 from xorpairs import *
-from generate_textstrings.py import *
+from generate_textstrings import *
 
 def output_possibilities(output_xor):   #SUP
 	#returns a list of output pairs possible
