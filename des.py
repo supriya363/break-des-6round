@@ -159,6 +159,5 @@ def testProg():
 
 
 
-# roundTest()
-getinputXor("00808200","60000000")
+# getinputXor("00808200","60000000")
 
