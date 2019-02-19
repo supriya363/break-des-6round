@@ -51,7 +51,7 @@ def permute(inp):
 		k+=1
 	return res
 
-def inverse_permute(inp):
+def inverse_permute(inp): #ARUN
 	pass
 
 
