@@ -125,7 +125,7 @@ def convert_input_to_xor(inp):   # Converts 32bit input to xor (e.g. 0405C000)
     res = []
     for i in range(0,len(inp),4):
         res.append(binaryToHex(inp[i:i+4]))
-    return res
+    return ''.join(res)
 
 def round(li, ri, no_of_rounds):
 	for rnd in range(no_of_rounds):
@@ -137,17 +137,20 @@ def round(li, ri, no_of_rounds):
 		print("After expansion: "+str(expansion_output))
 		print("After Substitution" + str(substitute_output))
 		print("After Permutation"+str(permutation_output))
+		print("After expansion: "+str(convert_input_to_xor(expansion_output)))
+		print("After Substitution: " + str(convert_input_to_xor(substitute_output)))
+		print("After Permutation: "+str(convert_input_to_xor(permutation_output)))
 		xor_with_lefthalf = xor(permutation_output, li)
-		print("After Xoring with left half: " + str(xor_with_lefthalf))
+		print("After Xoring with left half: " + str(convert_input_to_xor(xor_with_lefthalf)))
 		print("\n")
 		li = ri
 		ri = xor_with_lefthalf
 
 def getinputXor(leftXOR,rightXOR):
-	print(leftXOR)
-	print(rightXOR)
-	print(convert_xor_to_input(leftXOR))
-	print(convert_xor_to_input(rightXOR))
+
+	left = convert_xor_to_input(leftXOR)
+	right = convert_xor_to_input(rightXOR)
+	round(left, right, 1)
 
 
 
@@ -203,5 +206,5 @@ def testProg():
 
 
 # roundTest()
-getinputXor("04000001","405C0004")
+getinputXor("00808200","60000000")
 
