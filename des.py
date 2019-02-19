@@ -112,14 +112,14 @@ def hexToBinary(inp):
     return res
 
 def convert_xor_to_input(inp):   #e.g. inp = "0405C000" 
-    arr = list(inp)
-    res = []
-    for i in arr:
-        tmp = list(hexToBinary(i))
-        for j in range(len(tmp)):
-            res.append(tmp[j])
-    res = expansion(res)        #converting the 32 bit input to 48 bit  
-    return res
+	arr = list(inp)
+	res = []
+	for i in arr:
+		tmp = list(hexToBinary(i))
+		for j in range(len(tmp)):
+			res.append(tmp[j])
+			res = expansion(res)        #converting the 32 bit input to 48 bit  
+	return res
 
 def convert_input_to_xor(inp):   # Converts 32bit input to xor (e.g. 0405C000)
     res = []
@@ -143,8 +143,10 @@ def round(li, ri, no_of_rounds):
 		li = ri
 		ri = xor_with_lefthalf
 
-def func(ri):  #returns output xor
-	pass
+def getinputXor(leftXOR,rightXOR):
+	print(convert_xor_to_input(leftXOR))
+	print(convert_xor_to_input(rightXOR))
+
 
 
 #taken from online resources
@@ -156,25 +158,22 @@ def binvalue(val, bitsize): #Return the binary value as a string of the given si
         binval = "0"+binval #Add as many 0 as needed to get the wanted size
     return binval
 
-def convert_xor_to_input(inp):
-<<<<<<< HEAD
-	res = expansion(inp)
-	arr = []		#list to store the inputs to S-box in the form ["b0 b1 b2 b3 b4 b5"]
-	inp_length = 6		#Input length to S-box
-	count = 1
-	k = 0			
-	for i in res:
-		while(count <= inp_length):
-			arr[k] = arr[k] + res[i+count]
-			count = count+1
-		k = k+1
-		count = 1
-		i = i + 6
-		arr.append(arr[k])
+# def convert_xor_to_input(inp):
+# 	res = expansion(inp)
+# 	arr = []		#list to store the inputs to S-box in the form ["b0 b1 b2 b3 b4 b5"]
+# 	inp_length = 6		#Input length to S-box
+# 	count = 1
+# 	k = 0			
+# 	for i in res:
+# 		while(count <= inp_length):
+# 			arr[k] = arr[k] + res[i+count]
+# 			count = count+1
+# 		k = k+1
+# 		count = 1
+# 		i = i + 6
+# 		arr.append(arr[k])
+# 	return arr
 
-	return arr
-=======
-	pass
 
 def roundTest():
 	l = list("abcd") #64bits
@@ -198,7 +197,7 @@ def roundTest():
 	print("Input: " + str(bitarr_l)+str(bitarr_r))
 	round(bitarr_l, bitarr_r, 2)
 
->>>>>>> 504dfcc0a95521c2c8ed20aa83d773f456988d8f
+
 
 def testProg():
 	inp = list("abcd") #32bits
@@ -215,8 +214,7 @@ def testProg():
 
 
 
-<<<<<<< HEAD
-testProg()
-=======
-roundTest()
->>>>>>> 504dfcc0a95521c2c8ed20aa83d773f456988d8f
+
+# roundTest()
+getinputXor("04000000","405C0000")
+
