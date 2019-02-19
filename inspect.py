@@ -1,6 +1,6 @@
 from des import *
 from xorpairs import *
-from generate_textstrings.py import *
+from generate_textstrings import *
 
 def output_possibilities(output_xor):   #SUP
 	#returns a list of output pairs possible
@@ -20,11 +20,9 @@ def inspect_possibilities(input_xor, output_xor):
 	key_set = find_key_possibilities(input_pairs) #r5 to be passed
 	pass
 
-def start_inspecting(r6, r5, l5): #SUP
-	#xor l5 and r6 to get permutation output
-	#inverse permutation to get substitution output xor
-	#take expansion of r5 which is inputxor to sbox
-	input_xor = [] #bit arrays
-	output_xor = [] #bit arrays
+def start_inspecting(r6, r5, l5): #DONE
+	permutation_output = xor(l5, r6)
+	output_xor = inverse_permute(permutation_output) #DONE
+	input_xor = expansion(r5)
 	inspect_possibilities(input_xor, output_xor)
-	pass
+

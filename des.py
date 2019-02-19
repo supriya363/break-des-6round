@@ -51,8 +51,13 @@ def permute(inp):
 		k+=1
 	return res
 
-def inverse_permute(inp): #ARUN
-	pass
+def inverse_permute(inp): 
+	res = [0]*32
+	k = 0
+	for i in PBOX:
+		res[i-1] = inp[k]
+		k+=1
+	return res
 
 
 
