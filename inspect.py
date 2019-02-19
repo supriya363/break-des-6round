@@ -8,15 +8,29 @@ end_bit = 6
 
 def output_possibilities(output_xor):  
 	output_pairs = {}  # {[0,0,0,0]:[0,0,0,0] , [1,0,0,1]: [1,0,1,0]}
+    for i in range(0,16):
+        input1 = [int(x) for x in '{:04b}'.format(i)];
+        input2 =  xor(input1, output_xor);
+        output_pairs[convBitList2Int(input2)] = [input1,input2]
+    return output_pairs;
 
-
-	pass
-
-
+#inputXor => 6bit number
+#output_pairs => dictionary index=> [[0,1,1,1],[1,1,1,1]]
 def input_xor_possibilities(input_xor, output_pairs):
-	#returns list of input pairs possible
-	input_pairs = {}
-	pass
+	input_pairs = [];
+    for i in range(0, 16):
+        output1 = convBitList2Int(output_pairs[i][0]);
+        output2 = convBitList2Int(output_pairs[i][1]);
+        for rowIndex in range(0,4):
+            for i,val in enumerate(s1[rowIndex]):
+                if(val == output1):
+                    rowIndexB = "{:02b}".format(rowIndex);
+                    valB = "{:04b}".format(i);
+                    sixBitInput1 = rowIndexB[0] + valB + rowIndexB[1];
+                    sixBitInput1 = [int(i) for i in sixBitInput1];
+                    sixBitInput2 = xor(sixBitInput1, input_xor)
+                    input_pairs.append([convBitList2Int(sixBitInput1),convBitList2Int(sixBitInput2)]);
+    return input_pairs;
 
 def find_key_possibilities(input_pairs, r5): #SUP
 	key_set = []
@@ -37,4 +51,6 @@ def start_inspecting(r6xor, r5xor, l5xor, r5): #DONE
 	input_xor = expansion(r5xor)
 	actual_input = expansion(r5)
 	inspect_possibilities(input_xor, output_xor, actual_input)
+    
+
 

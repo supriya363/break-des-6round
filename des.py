@@ -160,6 +160,8 @@ def testProg():
 			bitarr.append(j)
 	print("Input: " + str(bitarr))
 
+def convBitList2Int(bitList):
+    return int("".join(str(i) for i in bitList),2)
 
 
 
