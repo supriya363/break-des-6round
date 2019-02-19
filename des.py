@@ -118,7 +118,7 @@ def convert_xor_to_input(inp):   #e.g. inp = "0405C000"
 		tmp = list(hexToBinary(i))
 		for j in range(len(tmp)):
 			res.append(tmp[j])
-			res = expansion(res)        #converting the 32 bit input to 48 bit  
+			# res = expansion(res)        #converting the 32 bit input to 48 bit  
 	return res
 
 def convert_input_to_xor(inp):   # Converts 32bit input to xor (e.g. 0405C000)
@@ -144,6 +144,8 @@ def round(li, ri, no_of_rounds):
 		ri = xor_with_lefthalf
 
 def getinputXor(leftXOR,rightXOR):
+	print(leftXOR)
+	print(rightXOR)
 	print(convert_xor_to_input(leftXOR))
 	print(convert_xor_to_input(rightXOR))
 
@@ -158,21 +160,6 @@ def binvalue(val, bitsize): #Return the binary value as a string of the given si
         binval = "0"+binval #Add as many 0 as needed to get the wanted size
     return binval
 
-# def convert_xor_to_input(inp):
-# 	res = expansion(inp)
-# 	arr = []		#list to store the inputs to S-box in the form ["b0 b1 b2 b3 b4 b5"]
-# 	inp_length = 6		#Input length to S-box
-# 	count = 1
-# 	k = 0			
-# 	for i in res:
-# 		while(count <= inp_length):
-# 			arr[k] = arr[k] + res[i+count]
-# 			count = count+1
-# 		k = k+1
-# 		count = 1
-# 		i = i + 6
-# 		arr.append(arr[k])
-# 	return arr
 
 
 def roundTest():
@@ -216,5 +203,5 @@ def testProg():
 
 
 # roundTest()
-getinputXor("04000000","405C0000")
+getinputXor("04000001","405C0004")
 
