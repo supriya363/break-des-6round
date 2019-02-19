@@ -1,5 +1,6 @@
 from des import *
 from xorpairs import *
+from generate_textstrings.py import *
 
 def output_possibilities(output_xor):
 	#returns a list of output pairs possible
@@ -16,7 +17,7 @@ def find_key_possibilities(input_pairs):
 def inspect_possibilities(input_xor, output_xor):
 	output_pairs = output_possibilities(output_xor)
 	input_pairs = input_possibilities(input_xor, output_pairs)
-	key_set = find_key_possibilities(input_pairs)
+	key_set = find_key_possibilities(input_pairs) #r5 to be passed
 	pass
 
 def start_inspecting(r6, r5, l5):
