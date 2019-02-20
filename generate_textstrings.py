@@ -8,6 +8,7 @@ left_xor = ['0100','0000','0101','1010','0000','0000','0000','0000']
 right_xor = ['0000','0100','0000','0000','0000','0000','0000','0000']
 bit_set = ['0000','0001','0010','0011','0100','0101','0110','0111','1000','1001','1010','1011','1100','1101','1110','1111']
 alphabet_map = {}
+R5XOR = "405A0000" #change when required
 
 def create_alphabet_map():
 	global alphabet_map
@@ -15,8 +16,6 @@ def create_alphabet_map():
 	for i in input_set:
 		alphabet_map[i]=bit_set[k]
 		k+=1
-
-
 
 # Finds the corresponding input having the required xor difference
 # inp is in the form - "8 chars"
@@ -61,6 +60,32 @@ def input_pairs():
     
     f.close()
 
+#generates new input-output bitencoded files which have apprpriate xor in the last round
+def clean_input_output_pairs():
+	if os.path.isfile('outputcipher.txt'):  #contains bit-encoded ciphertext pairs
+		f_out = open('outputcipher.txt','r') 
+		f_inp = open('outputplain.txt','r') #contains bitencoded plaintext pairs
+		f_clean_inp = open('output_plain_clean.txt','w')
+		f_clean_out = open('ouput_cipher_clean.txt','w')
+		for line_out,line_inp in zip(f_out,f_inp):
+
+			# get l6xor, since l6xor = r5xor, remove the input-output pairs
+			# that don't have lrxor same as our calculated r5xor
+			diff = get_diff_of_cipherpair(line_out[:64],line_out[65:-1])[:32]
+			# print(convert_input_to_xor(list(diff)))
+
+			r5_xor_bitarr = convert_xor_to_input(R5XOR)  #convert from hex
+			r5_xor_bitval = ''.join(r5_xor_bitarr)
+			if diff == r5_xor_bitval:
+				f_clean_inp.write(line_inp[:64]+' '+line_inp[65:-1]+'\n')
+				f_clean_out.write(line_out[:64]+' '+line_out[65:-1]+'\n')
+
+def get_diff_of_cipherpair(left, right):
+	left_bitarr = list(left)
+	right_bitarr = list(right)
+	diff_bitarr = xor(left_bitarr, right_bitarr)
+	return ''.join(diff_bitarr)		
+
 #convert text pairs to bit strings - save them in outputplain.txt/outputcipher.txt
 def convert_pairs_to_bitstring(flag):
 	if flag == 'p': 
@@ -78,7 +103,6 @@ def convert_pairs_to_bitstring(flag):
 			print("No input file found")
 			raise SystemExit
 	for line in f1:
-		print(line)
 		pair_first = line[:16]
 		pair_second = line[17:-1]
 		input1 = [ alphabet_map[ch] for ch in pair_first]
@@ -91,7 +115,9 @@ def convert_pairs_to_bitstring(flag):
 #Generate Pairs    
 input_pairs()
 create_alphabet_map()
-print alphabet_map
 convert_pairs_to_bitstring('p')
+clean_input_output_pairs()
+
+
 
 

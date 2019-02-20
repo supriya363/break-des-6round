@@ -76,8 +76,7 @@ def convert_xor_to_input(inp):   #e.g. inp = "0405C000"
 	for i in arr:
 		tmp = list(hexToBinary(i))
 		for j in range(len(tmp)):
-			res.append(tmp[j])
-			# res = expansion(res)        #converting the 32 bit input to 48 bit  
+			res.append(tmp[j])  
 	return res
 
 def convert_input_to_xor(inp):   # Converts 32bit input to xor (e.g. 0405C000)
