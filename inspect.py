@@ -15,7 +15,8 @@ def output_possibilities(output_xor):
     return output_pairs;
 
 #inputXor => 6bit number
-#output_pairs => dictionary index=> [[0,1,1,1],[1,1,1,1]]
+#output_pairs => dictionary index=> {[0,1,1,1],[1,1,1,1]}
+#input_pairs => [[12,13],[12,9]]
 def input_xor_possibilities(input_xor, output_pairs):
 	input_pairs = [];
     for i in range(0, 16):
