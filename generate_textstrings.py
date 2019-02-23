@@ -49,8 +49,10 @@ def input_pairs():
     count = 0
     for p in itertools.product(input_set, repeat=8):
         if(count < 10):            # change the '1000000' to the number of pairs of plaintext needed.
-            f.write("ffffffff"+''.join(p)+",")
-            f.write(generate_pair("ffffffff"+''.join(p)))
+            #f.write("ffffffff"+''.join(p)+",")
+            f.write(''.join(p)+''.join(p)+",")
+            #f.write(generate_pair("ffffffff"+''.join(p)))
+            f.write(generate_pair(''.join(p)+''.join(p)))
             f.write("\n")
             count += 1    
         else:
