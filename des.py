@@ -59,6 +59,21 @@ def inverse_permute(inp):
 		k+=1
 	return res
 
+def final_permutation(inp):
+	res = [0]*64
+	k = 0
+	for i in IPBOX:
+		res[i-1] = inp[k]
+		k+=1
+	return res
+
+def initial_permutation(inp):
+	res = [0]*64
+	k = 0
+	for i in IPBOX:
+		res[k] = inp[i-1]
+		k+=1
+	return res
 
 
 def binaryToHex(val):
@@ -145,6 +160,25 @@ def roundTest():
 	print("Input: " + str(bitarr_l)+str(bitarr_r))
 	round(bitarr_l, bitarr_r, 2)
 
+def roundTest2():
+	rightXorstr = "04000000"
+	leftXorstr = "405C0000"
+	rightXor = convert_xor_to_input(rightXorstr)
+	leftXor = convert_xor_to_input(leftXorstr)
+	e = expansion(rightXor)
+	soutput = convert_xor_to_input("0A000000")
+	p = permute(soutput)
+	res = xor(p, leftXor)
+	res = expansion(res)
+	res = inverse_permute(convert_xor_to_input("04000000"))
+	res = permute(convert_xor_to_input("00100000"))
+	res = expansion(convert_xor_to_input("405C0000"))
+	res = permute(convert_xor_to_input("30ef0000"))
+	res = initial_permutation(convert_xor_to_input("0000901010005000"))
+	# res = final_permutation(convert_xor_to_input("405c000004000000"))
+	# res = xor(res, rightXor)
+	return convert_input_to_xor(res)
+
 
 
 def testProg():
@@ -164,6 +198,6 @@ def convBitList2Int(bitList):
 
 
 
-
+print(roundTest2())
 # getinputXor("00808200","60000000")
 

@@ -8,7 +8,7 @@ left_xor = ['0100','0000','0101','1010','0000','0000','0000','0000']
 right_xor = ['0000','0100','0000','0000','0000','0000','0000','0000']
 bit_set = ['0000','0001','0010','0011','0100','0101','0110','0111','1000','1001','1010','1011','1100','1101','1110','1111']
 alphabet_map = {}
-R5XOR = "405A0000" #change when required
+R5XOR = "405A0000" #Not required
 
 def create_alphabet_map():
 	global alphabet_map
@@ -88,7 +88,7 @@ def get_diff_of_cipherpair(left, right):
 
 #convert text pairs to bit strings - save them in outputplain.txt/outputcipher.txt
 def convert_pairs_to_bitstring(flag):
-	if flag == 'p': 
+	if flag == 'p': #Not Required
 		if os.path.isfile('input.txt'):
 			f1 = open('input.txt','r')
 			f2 = open('outputplain.txt','w')
@@ -96,9 +96,9 @@ def convert_pairs_to_bitstring(flag):
 			print("No input pair file found\n")
 			raise SystemExit
 	elif flag == 'c':
-		if os.path.isfile('cipher.txt'):
-			f1 = open('cipher.txt','r')
-			f2 = open('outputcipher.txt','w')
+		if os.path.isfile('cipherpair.txt'):
+			f1 = open('cipherpair.txt','r')
+			f2 = open('cipher.txt','w')
 		else:
 			print("No input file found")
 			raise SystemExit
@@ -110,13 +110,15 @@ def convert_pairs_to_bitstring(flag):
 		bit_string1 = ''.join(input1)
 		bit_string2 = ''.join(input2)
 		f2.write(bit_string1 + ' ' + bit_string2+ '\n')
-
+	f1.close()
+	f2.close()
 
 #Generate Pairs    
 input_pairs()
 create_alphabet_map()
 convert_pairs_to_bitstring('p')
-clean_input_output_pairs()
+convert_pairs_to_bitstring('c')
+
 
 
 
