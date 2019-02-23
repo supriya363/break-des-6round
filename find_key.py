@@ -3,7 +3,7 @@ from des import *
 import os
 import sys
 
-
+#output_pairs => dictionary index=> {[0,1,1,1],[1,1,1,1]}
 def divide_input_and_output():
 	if os.path.isfile('inputxor.txt') and os.path.isfile('outputxor.txt'):
 		f_inp = open('inputxor.txt','r')
@@ -32,15 +32,9 @@ def divide_input_and_output():
 def find_key_possibilities(input_pairs, r5, sbox): 
 	f_key = open('keyset'+str(sbox)+'.txt','a+')
 	key_set = []
-	for li in input_pairs:
-		u1 = li[0]
-		# key = xor(u1, )
-		# key = xor(u1)
-		# f_key.write()
+	pass
 
-	for u1 in input_pairs.keys():
-		key_set.append(xor(u1, r5[start_bit:end_bit]))
-	return key_set
+
 
 def output_possibilities(output_xor):  
 	output_pairs = {}  # {[0,0,0,0]:[0,0,0,0] , [1,0,0,1]: [1,0,1,0]}
@@ -87,9 +81,6 @@ def input_xor_possibilities(input_xor, output_pairs, sbox):
 					sixBitInput1 = [int(i) for i in sixBitInput1];
 					sixBitInput1 = [str(i) for i in sixBitInput1]
 					sixBitInput2 = xor(sixBitInput1, input_xor)
-					# print(sixBitInput1)
-					# print(sixBitInput2)
-					# print('\n')
 					input_pairs.append([sixBitInput1, sixBitInput2])
 					# input_pairs.append([convBitList2Int(sixBitInput1),convBitList2Int(sixBitInput2)]);
 	return input_pairs;
