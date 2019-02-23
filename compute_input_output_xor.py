@@ -2,7 +2,7 @@ from des import *
 import itertools
 import sys
 import os
-
+l5_XOR = "04000000"
 
 #take ciphertext pairs from cipher.txt and apply reverse permuation on them
 #place the resulting pair in finalcipher.txt
@@ -27,10 +27,15 @@ def reverse_permute():
 
 #compute xor of ciphertext pairs in bitstring form in finalcipher.txt and place them in
 # cipherxor.txt in the form leftxor rightxor
-def compute_xor_of_cipherpair():
+#expand l6 and l6' and place them in expandr5.txt
+#compute input to sbox and place it in inputxor.txt
+def compute_sbox_xor():
 	if os.path.isfile('finalcipher.txt'):
 		f_in = open('finalcipher.txt','r')
 		f_out = open('cipherxor.txt','w')
+		f_exp = open('expandr5.txt','w')
+		f_sbox_inp = open('inputxor.txt','w')
+		f_sbox_out = open('outputxor.txt','w')
 		for line in f_in:
 			c1 = line[:64]
 			c2 = line[65:-1]
@@ -38,27 +43,34 @@ def compute_xor_of_cipherpair():
 			c1_r6 = c1[32:]
 			c2_l6 = c2[:32]
 			c2_r6 = c2[32:]
+
+
+			c1_exp = ''.join(expansion(list(c1_l6)))
+			c2_exp = ''.join(expansion(list(c2_l6)))
 			l6_xor = ''.join(xor(list(c1_l6),list(c2_l6)))
 			r6_xor = ''.join(xor(list(c1_r6),list(c2_r6)))
+			permutation_out = xor(list(r6_xor),convert_xor_to_input(l5_XOR))
+			sbox_input_xor = ''.join(xor(list(c1_exp),list(c2_exp)))
+			sbox_output_xor = ''.join(inverse_permute(permutation_out))
+
+
 			f_out.write(l6_xor + ' ' + r6_xor + '\n')
+			f_exp.write(c1_exp + ' ' + c2_exp + '\n') #e(r5) and e(r5')
+			f_sbox_inp.write(sbox_input_xor + '\n')
+			f_sbox_out.write(sbox_output_xor + '\n')
+
 		f_in.close()
 		f_out.close()
+		f_exp.close()
+		f_sbox_inp.close()
+		f_sbox_out.close()
 	else:
 		print("No input file found\n")
 		raise SystemExit
 
 
-#expand l6 and l6' and place them in expandr5.txt
-#compute input to sbox and place it in inputxor.txt
-def compute_input_xor_of_sbox():
-	pass
-
-
-# compute output xor of each pair and place them in outputxor.txt
-def compute_output_xor_of_sbox():
-	pass
 
 
 
 reverse_permute()
-compute_xor_of_cipherpair()
+compute_sbox_xor()
