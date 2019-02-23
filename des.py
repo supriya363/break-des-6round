@@ -198,6 +198,6 @@ def convBitList2Int(bitList):
 
 
 
-print(roundTest2())
+# print(roundTest2())
 # getinputXor("00808200","60000000")
 

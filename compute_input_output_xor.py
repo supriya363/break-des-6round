@@ -47,10 +47,10 @@ def compute_sbox_xor():
 
 			c1_exp = ''.join(expansion(list(c1_l6)))
 			c2_exp = ''.join(expansion(list(c2_l6)))
-			l6_xor = ''.join(xor(list(c1_l6),list(c2_l6)))
+			l6_xor = ''.join(xor(c1_l6,c2_l6))
 			r6_xor = ''.join(xor(list(c1_r6),list(c2_r6)))
 			permutation_out = xor(list(r6_xor),convert_xor_to_input(l5_XOR))
-			sbox_input_xor = ''.join(xor(list(c1_exp),list(c2_exp)))
+			sbox_input_xor = ''.join(xor(c1_exp,c2_exp))
 			sbox_output_xor = ''.join(inverse_permute(permutation_out))
 
 
@@ -67,9 +67,6 @@ def compute_sbox_xor():
 	else:
 		print("No input file found\n")
 		raise SystemExit
-
-
-
 
 
 reverse_permute()

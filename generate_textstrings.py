@@ -45,7 +45,7 @@ def input_pairs():
     if os.path.isfile('input.txt'):
         os.remove('input.txt')
         
-    f = open('input.txt','w')
+    f = open('input.txt','w+')
     count = 0
     for p in itertools.product(input_set, repeat=8):
         if(count < 10):            # change the '1000000' to the number of pairs of plaintext needed.
@@ -65,8 +65,8 @@ def clean_input_output_pairs():
 	if os.path.isfile('outputcipher.txt'):  #contains bit-encoded ciphertext pairs
 		f_out = open('outputcipher.txt','r') 
 		f_inp = open('outputplain.txt','r') #contains bitencoded plaintext pairs
-		f_clean_inp = open('output_plain_clean.txt','w')
-		f_clean_out = open('ouput_cipher_clean.txt','w')
+		f_clean_inp = open('output_plain_clean.txt','w+')
+		f_clean_out = open('ouput_cipher_clean.txt','w+')
 		for line_out,line_inp in zip(f_out,f_inp):
 
 			# get l6xor, since l6xor = r5xor, remove the input-output pairs
@@ -98,7 +98,7 @@ def convert_pairs_to_bitstring(flag):
 	elif flag == 'c':
 		if os.path.isfile('cipherpair.txt'):
 			f1 = open('cipherpair.txt','r')
-			f2 = open('cipher.txt','w')
+			f2 = open('cipher.txt','w+')
 		else:
 			print("No input file found")
 			raise SystemExit
