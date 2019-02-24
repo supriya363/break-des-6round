@@ -34,11 +34,7 @@ def get_sbox(sbox):
 		print("SBOX ERROR\n")
 		raise SystemExit
 
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 22964cd51cd15f2ea3666e8e36a715b0d0476dc5
 def input_xor_possibilities(input_xor, output_pairs, sbox):
     input_pairs = [];
     input_xor_val = ''.join(input_xor);
@@ -62,13 +58,8 @@ def input_xor_possibilities(input_xor, output_pairs, sbox):
                     sixBitInput2 = rowIndexB[0] + valB + rowIndexB[1];
                     #u2_possibility.append(int(sixBitInput2,2));
                     u2_possibility.append(sixBitInput2);
-                    
-                # 					sixBitInput1 = [int(i) for i in sixBitInput1];
-                # 					sixBitInput1 = [str(i) for i in sixBitInput1];
-<<<<<<< HEAD
-=======
-        print(u1_possibility, u2_possibility)
->>>>>>> 22964cd51cd15f2ea3666e8e36a715b0d0476dc5
+
+
         for u1 in u1_possibility:
             for u2 in u2_possibility:
                 u1u2_xor = xor(u1, u2);

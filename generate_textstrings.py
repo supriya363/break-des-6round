@@ -42,25 +42,41 @@ def generate_pair(inp):
 
 # Storing the plaintext pairs in the file 'input.txt' in the form 'plaintext1,plaintext2'
 def input_pairs():
-    if os.path.isfile('input.txt'):
-        os.remove('input.txt')
-        
-    f = open('input.txt','w+')
-    count = 0
-    for p in itertools.product(input_set, repeat=8):
-        if(count < 10000):            # change the '1000000' to the number of pairs of plaintext needed.
-            #f.write("ffffffff"+''.join(p)+",")
-            f.write(''.join(p)+''.join(p)+",\n")
-            #f.write(generate_pair("ffffffff"+''.join(p)))
-            f.write(generate_pair(''.join(p)+''.join(p)))
-            f.write(",\n")
-            count += 1    
-        else:
-            f.close()
-            # raise SystemExit
-            break
-    
-    f.close()
+	if os.path.isfile('input.txt'):
+		os.remove('input.txt')
+
+	f = open('input.txt','w+')
+	f2 = open('input2.txt', 'w+')
+	f3 = open('input3.txt', 'w+')
+	count = 0
+	for p in itertools.product(input_set, repeat=8):
+		if(count < 150000):            # change the '1000000' to the number of pairs of plaintext needed.
+		#f.write("ffffffff"+''.join(p)+",")
+			if count < 50000:
+				f.write(''.join(p)+''.join(p)+",\n")
+				#f.write(generate_pair("ffffffff"+''.join(p)))
+				f.write(generate_pair(''.join(p)+''.join(p)))
+				f.write(",\n")
+
+			elif count < 100000:
+				f2.write(''.join(p)+''.join(p)+",\n")
+				#f.write(generate_pair("ffffffff"+''.join(p)))
+				f2.write(generate_pair(''.join(p)+''.join(p)))
+				f2.write(",\n")
+			else:
+				f3.write(''.join(p)+''.join(p)+",\n")
+				#f.write(generate_pair("ffffffff"+''.join(p)))
+				f3.write(generate_pair(''.join(p)+''.join(p)))
+				f3.write(",\n")
+			count += 1    
+			
+		# raise SystemExit
+		else:
+			break
+
+	f.close()
+	f2.close()
+	f3.close()
 
 
 def convert_responsefile_to_cipher():
@@ -110,8 +126,8 @@ def convert_pairs_to_bitstring(flag):
 
 #Generate Pairs  
 
-# #PHASE 1   
-# input_pairs()
+#PHASE 1   
+input_pairs()
 
 # PHASE 2 - After creation of Responsefile.txt
 # convert_responsefile_to_cipher()
