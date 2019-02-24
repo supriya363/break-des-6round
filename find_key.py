@@ -35,25 +35,46 @@ def get_sbox(sbox):
 		raise SystemExit
 
 
-def input_xor_possibilities(input_xor, output_pairs, sbox):
-	input_pairs = [];
-	for i in range(0, 16):
-		output1 = convBitList2Int(output_pairs[i][0]);
-		output2 = convBitList2Int(output_pairs[i][1]);
-		for rowIndex in range(0,4):
-			s1 = get_sbox(sbox)
-			for i,val in enumerate(s1[rowIndex]):
-				if(val == output1):
-					rowIndexB = "{:02b}".format(rowIndex);
-					valB = "{:04b}".format(i);
-					sixBitInput1 = rowIndexB[0] + valB + rowIndexB[1];
-					sixBitInput1 = [int(i) for i in sixBitInput1];
-					sixBitInput1 = [str(i) for i in sixBitInput1]
-					sixBitInput2 = xor(sixBitInput1, input_xor)
-					input_pairs.append([sixBitInput1, sixBitInput2])
-					# input_pairs.append([convBitList2Int(sixBitInput1),convBitList2Int(sixBitInput2)]);
-	return input_pairs;
 
+def input_xor_possibilities(input_xor, output_pairs, sbox):
+    input_pairs = [];
+    input_xor_val = ''.join(input_xor);
+    for i in range(0, 16):
+        output1 = convBitList2Int(output_pairs[i][0]);
+        output2 = convBitList2Int(output_pairs[i][1]);
+        u1_possibility = [];
+        u2_possibility = [];
+        for rowIndex in range(0,4):
+            s1 = get_sbox(sbox)
+            for i,val in enumerate(s1[rowIndex]):
+                if(val == output1):
+                    rowIndexB = "{:02b}".format(rowIndex);
+                    valB = "{:04b}".format(i);
+                    sixBitInput1 = rowIndexB[0] + valB + rowIndexB[1];
+                    #u1_possibility.append(int(sixBitInput1,2));
+                    u1_possibility.append(sixBitInput1);
+                if(val == output2):
+                    rowIndexB = "{:02b}".format(rowIndex);
+                    valB = "{:04b}".format(i);
+                    sixBitInput2 = rowIndexB[0] + valB + rowIndexB[1];
+                    #u2_possibility.append(int(sixBitInput2,2));
+                    u2_possibility.append(sixBitInput2);
+                    
+                # 					sixBitInput1 = [int(i) for i in sixBitInput1];
+                # 					sixBitInput1 = [str(i) for i in sixBitInput1];
+        print(u1_possibility, u2_possibility)
+        for u1 in u1_possibility:
+            for u2 in u2_possibility:
+                u1u2_xor = xor(u1, u2);
+                u1u2_xor = ''.join(u1u2_xor);
+                if(input_xor_val == u1u2_xor):
+                    u1_str = [str(i) for i in u1];
+                    u2_str = [str(i) for i in u2];
+                    input_pairs.append([u1_str,u2_str]);
+                
+    # 					input_pairs.append([sixBitInput1, sixBitInput2])
+    # 					input_pairs.append((convBitList2Int(sixBitInput1),convBitList2Int(sixBitInput2)));
+    return input_pairs;
 
 #output_pairs => dictionary index=> {[0,1,1,1],[1,1,1,1]}
 def divide_input_and_output():
