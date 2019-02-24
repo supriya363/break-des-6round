@@ -3,39 +3,6 @@ from des import *
 import os
 import sys
 
-#output_pairs => dictionary index=> {[0,1,1,1],[1,1,1,1]}
-def divide_input_and_output():
-	if os.path.isfile('inputxor.txt') and os.path.isfile('outputxor.txt'):
-		f_inp = open('inputxor.txt','r')
-		f_out = open('outputxor.txt','r')
-		f_r5 = open('expandr5.txt','r')
-		inputxor_list = []
-		outputxor_list = []
-		for line_inp, line_out, line_r5 in zip(f_inp,f_out, f_r5):
-			j = 0
-			inputxor_list = [ line_inp[i:i+6] for i in range(0,len(line_inp)-1,6)]
-			outputxor_list = [ line_out[j:j+4] for j in range(0,len(line_out)-1,4)]
-			r5 = line_r5[:48]
-			sbox = 1
-			for input_xor,output_xor in zip(inputxor_list,outputxor_list):
-				print(sbox)
-				print("\n")
-				output_pairs = output_possibilities(output_xor)
-				input_pairs = input_xor_possibilities(input_xor, output_pairs, sbox)
-				# find_key_possibilities(input_pairs, r5, sbox)
-				sbox+=1
-
-	else:
-		print("No input file found here\n")
-		raise SystemExit
-
-def find_key_possibilities(input_pairs, r5, sbox): 
-	f_key = open('keyset'+str(sbox)+'.txt','a+')
-	key_set = []
-	pass
-
-
-
 def output_possibilities(output_xor):  
 	output_pairs = {}  # {[0,0,0,0]:[0,0,0,0] , [1,0,0,1]: [1,0,1,0]}
 	for i in range(0,16):
@@ -44,6 +11,7 @@ def output_possibilities(output_xor):
 		input2 =  xor(input1, output_xor);
 		output_pairs[convBitList2Int(input2)] = [input1,input2]
 	return output_pairs
+
 
 def get_sbox(sbox):
 	if sbox == 1:
@@ -66,6 +34,7 @@ def get_sbox(sbox):
 		print("SBOX ERROR\n")
 		raise SystemExit
 
+
 def input_xor_possibilities(input_xor, output_pairs, sbox):
 	input_pairs = [];
 	for i in range(0, 16):
@@ -86,5 +55,60 @@ def input_xor_possibilities(input_xor, output_pairs, sbox):
 	return input_pairs;
 
 
+#output_pairs => dictionary index=> {[0,1,1,1],[1,1,1,1]}
+def divide_input_and_output():
+	if os.path.isfile('inputxor.txt') and os.path.isfile('outputxor.txt'):
+		f_inp = open('inputxor.txt','r')
+		f_out = open('outputxor.txt','r')
+		f_r5 = open('expandr5.txt','r')
+		inputxor_list = []
+		outputxor_list = []
+		for line_inp, line_out, line_r5 in zip(f_inp,f_out, f_r5):
+			j = 0
+			inputxor_list = [ line_inp[i:i+6] for i in range(0,len(line_inp)-1,6)]
+			outputxor_list = [ line_out[j:j+4] for j in range(0,len(line_out)-1,4)]
+			#print(inputxor_list)
+			#print(outputxor_list)
+			r5 = line_r5[:48]
+			#print(r5)
+			sbox = 1
+			for input_xor,output_xor in zip(inputxor_list,outputxor_list):
+				print(sbox)
+				print("\n")
+				output_pairs = output_possibilities(output_xor)
+				input_pairs = input_xor_possibilities(input_xor, output_pairs, sbox)
+				#print(input_pairs)
+				find_key_possibilities(input_pairs, r5, sbox)
+				sbox+=1
+
+	else:
+		print("No input file found here\n")
+		raise SystemExit
+
+def make_key_list():	# Returns list of all possible 64 keys[6 bits]
+	key_list=[]
+	for i in range(64):
+		tmp=bin(i)[2:]
+		while len(tmp) < 6:
+			tmp = "0" + tmp
+		key_list.append([tmp,0])
+
+	return key_list
+
+def find_key_possibilities(input_pairs, r5, sbox):
+	if os.path.isfile('keyset'+str(sbox)+'.txt'):
+		os.remove('keyset'+str(sbox)+'.txt')
+
+	key_list=make_key_list()
+	f_key = open('keyset'+str(sbox)+'.txt','a+')
+	
+	for i in range(len(input_pairs)):
+		# f_key.write(''.join(xor(input_pairs[i][0], r5[(sbox-1)*6:(sbox-1)*6+6])))   # xor of 6 bits of key and corresponding S-box input
+		key_list[int(''.join(xor(input_pairs[i][0], r5[(sbox-1)*6:(sbox-1)*6+6])),2)][1] += 1	# xor of 6 bits of key and corresponding S-box input
+	
+	for i in range(len(key_list)):
+		f_key.write(str(key_list[i][0])+':'+str(key_list[i][1]))
+		f_key.write("\n")
+	f_key.close()				
 
 divide_input_and_output()
