@@ -73,8 +73,8 @@ def divide_input_and_output():
 			#print(r5)
 			sbox = 1
 			for input_xor,output_xor in zip(inputxor_list,outputxor_list):
-				print(sbox)
-				print("\n")
+				# print(sbox)
+				# print("\n")
 				output_pairs = output_possibilities(output_xor)
 				input_pairs = input_xor_possibilities(input_xor, output_pairs, sbox)
 				#print(input_pairs)

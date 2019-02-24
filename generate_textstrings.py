@@ -48,7 +48,7 @@ def input_pairs():
     f = open('input.txt','w+')
     count = 0
     for p in itertools.product(input_set, repeat=8):
-        if(count < 10):            # change the '1000000' to the number of pairs of plaintext needed.
+        if(count < 10000):            # change the '1000000' to the number of pairs of plaintext needed.
             #f.write("ffffffff"+''.join(p)+",")
             f.write(''.join(p)+''.join(p)+",\n")
             #f.write(generate_pair("ffffffff"+''.join(p)))
@@ -62,25 +62,6 @@ def input_pairs():
     
     f.close()
 
-#generates new input-output bitencoded files which have apprpriate xor in the last round
-def clean_input_output_pairs():
-	if os.path.isfile('outputcipher.txt'):  #contains bit-encoded ciphertext pairs
-		f_out = open('outputcipher.txt','r') 
-		f_inp = open('outputplain.txt','r') #contains bitencoded plaintext pairs
-		f_clean_inp = open('output_plain_clean.txt','w+')
-		f_clean_out = open('ouput_cipher_clean.txt','w+')
-		for line_out,line_inp in zip(f_out,f_inp):
-
-			# get l6xor, since l6xor = r5xor, remove the input-output pairs
-			# that don't have lrxor same as our calculated r5xor
-			diff = get_diff_of_cipherpair(line_out[:64],line_out[65:-1])[:32]
-			# print(convert_input_to_xor(list(diff)))
-
-			r5_xor_bitarr = convert_xor_to_input(R5XOR)  #convert from hex
-			r5_xor_bitval = ''.join(r5_xor_bitarr)
-			if diff == r5_xor_bitval:
-				f_clean_inp.write(line_inp[:64]+' '+line_inp[65:-1]+'\n')
-				f_clean_out.write(line_out[:64]+' '+line_out[65:-1]+'\n')
 
 def convert_responsefile_to_cipher():
 	if os.path.isfile('Responsefile.txt'):
@@ -132,10 +113,10 @@ def convert_pairs_to_bitstring(flag):
 # #PHASE 1   
 # input_pairs()
 
-#PHASE 2 - After creation of Responsefile.txt
-convert_responsefile_to_cipher()
-create_alphabet_map()
-convert_pairs_to_bitstring('c')
+# PHASE 2 - After creation of Responsefile.txt
+# convert_responsefile_to_cipher()
+# create_alphabet_map()
+# convert_pairs_to_bitstring('c')
 
 
 

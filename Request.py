@@ -11,12 +11,14 @@ f = open('input.txt')
 data = '{"password":"555acfd4d3c1b7a398d71e4c1538ad4d","teamname":"Amalgam","plaintext":"password"}'
 data = json.loads(data);
 cipherTexts = []
+count = 0
 for line in f.readlines():
     data["plaintext"] = line.split(',')[0]
     r = requests.post(url, json=data, headers=headers, verify=False);
     if(r.status_code == 200):
         response = json.loads(r.text);
-        # print(data["plaintext"], response["ciphertext"])
+        print(count)
+        count+=1
         # cipherPlain = "{0},{1}\n".format(data["plaintext"], response["ciphertext"])
         cipherPlain = "{0}\n".format(response["ciphertext"])
         cipherTexts.append(cipherPlain)
