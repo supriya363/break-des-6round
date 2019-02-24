@@ -16,7 +16,7 @@ for line in f.readlines():
     r = requests.post(url, json=data, headers=headers, verify=False);
     if(r.status_code == 200):
         response = json.loads(r.text);
-        print(data["plaintext"], response["ciphertext"])
+        # print(data["plaintext"], response["ciphertext"])
         # cipherPlain = "{0},{1}\n".format(data["plaintext"], response["ciphertext"])
         cipherPlain = "{0}\n".format(response["ciphertext"])
         cipherTexts.append(cipherPlain)

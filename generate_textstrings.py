@@ -4,8 +4,8 @@ import sys
 import os
 
 input_set = ['f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u']
-left_xor = ['0100','0000','0101','1010','0000','0000','0000','0000']
-right_xor = ['0000','0100','0000','0000','0000','0000','0000','0000']
+left_xor = ['0000','0000','0000','0000','1001','0000','0001','0000']  #00009010
+right_xor = ['0001','0000','0000','0000','0101','0000','0000','0000'] #10005000
 bit_set = ['0000','0001','0010','0011','0100','0101','0110','0111','1000','1001','1010','1011','1100','1101','1110','1111']
 alphabet_map = {}
 R5XOR = "405A0000" #Not required
@@ -82,6 +82,25 @@ def clean_input_output_pairs():
 				f_clean_inp.write(line_inp[:64]+' '+line_inp[65:-1]+'\n')
 				f_clean_out.write(line_out[:64]+' '+line_out[65:-1]+'\n')
 
+def convert_responsefile_to_cipher():
+	if os.path.isfile('Responsefile.txt'):
+		f1 = open('Responsefile.txt','r')
+		f2 = open('cipherpair.txt','w+')
+		flag = 0
+		for line in f1:
+			if flag ==0:
+				f2.write(line[:16])
+				flag = 1
+			else:
+				f2.write(' ' + line[:16]+'\n')
+				flag = 0
+		f1.close()
+		f2.close()
+	else:
+		print("No Responsefile.txt found")
+		raise SystemExit
+
+
 def get_diff_of_cipherpair(left, right):
 	left_bitarr = list(left)
 	right_bitarr = list(right)
@@ -90,19 +109,12 @@ def get_diff_of_cipherpair(left, right):
 
 #convert text pairs to bit strings - save them in outputplain.txt/outputcipher.txt
 def convert_pairs_to_bitstring(flag):
-	if flag == 'p': #Not Required
-		if os.path.isfile('input.txt'):
-			f1 = open('input.txt','r')
-			f2 = open('outputplain.txt','w')
-		else:
-			print("No input pair file found\n")
-			raise SystemExit
-	elif flag == 'c':
+	if flag == 'c':
 		if os.path.isfile('cipherpair.txt'):
 			f1 = open('cipherpair.txt','r')
 			f2 = open('cipher.txt','w+')
 		else:
-			print("No input file found")
+			print("No input file cipherpair.txt found")
 			raise SystemExit
 	for line in f1:
 		pair_first = line[:16]
@@ -115,11 +127,17 @@ def convert_pairs_to_bitstring(flag):
 	f1.close()
 	f2.close()
 
-#Generate Pairs    
-input_pairs()
-# create_alphabet_map()
-# convert_pairs_to_bitstring('p')
-# convert_pairs_to_bitstring('c')
+#Generate Pairs  
+
+# #PHASE 1   
+# input_pairs()
+
+#PHASE 2 - After creation of Responsefile.txt
+convert_responsefile_to_cipher()
+create_alphabet_map()
+convert_pairs_to_bitstring('c')
+
+
 
 
 
