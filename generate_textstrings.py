@@ -4,8 +4,8 @@ import sys
 import os
 
 input_set = ['f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u']
-left_xor = ['0000','0000','0000','0000','1001','0000','0001','0000']  #00009010  #0040000
-right_xor = ['1000','0000','0000','0000','0101','0000','0000','0000'] #10005000  #00808014
+left_xor = ['0000','0000','0000','0000','1001','0000','0001','0000']  #00009010  
+right_xor = ['0001','0000','0000','0000','0101','0000','0000','0000'] #10005000  
 bit_set = ['0000','0001','0010','0011','0100','0101','0110','0111','1000','1001','1010','1011','1100','1101','1110','1111']
 alphabet_map = {}
 
@@ -48,7 +48,7 @@ def input_pairs():
 	f = open('input.txt','w+')
 	count = 0
 	for p in itertools.product(input_set, repeat=8):
-		if(count < 5000):       
+		if(count < 2000):       
 			count += 1 
 			f.write(''.join(p)+''.join(p)+",\n")
 			f.write(generate_pair(''.join(p)+''.join(p)))
@@ -57,9 +57,6 @@ def input_pairs():
 			break
 
 	f.close()
-	# f2.close()
-	# f3.close()
-
 
 
 def convert_responsefile_to_cipher():
