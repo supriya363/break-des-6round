@@ -4,8 +4,9 @@ import sys
 import os
 
 input_set = ['f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u']
-left_xor = ['0000','0000','0000','0000','1001','0000','0001','0000']  #00009010  
-right_xor = ['0001','0000','0000','0000','0101','0000','0000','0000'] #10005000  
+#input xor required 0000801000004000
+left_xor = ['0000','0000','0000','0000','1000','0000','0001','0000']  #00008010 
+right_xor = ['0000','0000','0000','0000','0100','0000','0000','0000'] #00004000 
 bit_set = ['0000','0001','0010','0011','0100','0101','0110','0111','1000','1001','1010','1011','1100','1101','1110','1111']
 alphabet_map = {}
 
@@ -107,14 +108,14 @@ def convert_pairs_to_bitstring(flag):
 #Generate Pairs  
 
 #PHASE 1   
-input_pairs()
+# input_pairs()
 
 
 
 # PHASE 2 - After creation of Responsefile.txt
-# convert_responsefile_to_cipher()
-# create_alphabet_map()
-# convert_pairs_to_bitstring('c')
+convert_responsefile_to_cipher()
+create_alphabet_map()
+convert_pairs_to_bitstring('c')
 
 
 

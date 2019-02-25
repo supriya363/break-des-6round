@@ -161,21 +161,22 @@ def roundTest():
 	round(bitarr_l, bitarr_r, 2)
 
 def roundTest2():
-	rightXorstr = "04000000"
-	leftXorstr = "405C0000"
-	rightXor = convert_xor_to_input(rightXorstr)
-	leftXor = convert_xor_to_input(leftXorstr)
-	e = expansion(rightXor)
-	soutput = convert_xor_to_input("0A000000")
-	p = permute(soutput)
-	res = xor(p, leftXor)
-	res = expansion(res)
-	res = inverse_permute(convert_xor_to_input("04000000"))
-	res = permute(convert_xor_to_input("00100000"))
-	res = expansion(convert_xor_to_input("405C0000"))
-	res = permute(convert_xor_to_input("30ef0000"))
-	res = initial_permutation(convert_xor_to_input("0000901010005000"))
-	# res = final_permutation(convert_xor_to_input("405c000004000000"))
+	# rightXorstr = "04000000"
+	# leftXorstr = "405C0000"
+	# rightXor = convert_xor_to_input(rightXorstr)
+	# leftXor = convert_xor_to_input(leftXorstr)
+	# e = expansion(rightXor)
+	# return convert_input_to_xor(e)
+	# soutput = convert_xor_to_input("0A000000")
+	# p = permute(soutput)
+	# res = xor(p, leftXor)
+	# res = expansion(res)
+	# res = inverse_permute(convert_xor_to_input("04000000"))
+	# res = permute(convert_xor_to_input("00100000"))
+	# res = expansion(convert_xor_to_input("405C0000"))
+	# res = permute(convert_xor_to_input("30ef0000"))
+	res = initial_permutation(convert_xor_to_input("0000801000004000"))
+	# res = final_permutation(convert_xor_to_input("4008000004000000"))
 	# res = xor(res, rightXor)
 	return convert_input_to_xor(res)
 
@@ -210,7 +211,7 @@ def testProg():
 def convBitList2Int(bitList):
     return int("".join(str(i) for i in bitList),2)
 
-print(convert_input_to_xor(roundTest3()))
+# print(convert_input_to_xor(roundTest3()))
 # print(roundTest3())
 # print(roundTest2())
 # getinputXor("00808200","60000000")
