@@ -2,7 +2,7 @@ from des import *
 import itertools
 import sys
 import os
-l5_XOR = "04000000"
+# l5_XOR = "04000000"
 
 #take ciphertext pairs from cipher.txt and apply reverse permuation on them
 #place the resulting pair in finalcipher.txt
@@ -33,7 +33,7 @@ def compute_sbox_xor():
 	if os.path.isfile('finalcipher.txt'):
 		f_in = open('finalcipher.txt','r')
 		f_out = open('cipherxor.txt','w')
-		f_exp = open('expandr3.txt','w')
+		f_exp = open('expandr5.txt','w')
 		f_sbox_inp = open('inputxor.txt','w')
 		f_sbox_out = open('outputxor.txt','w')
 		for line in f_in:
@@ -45,12 +45,13 @@ def compute_sbox_xor():
 			c2_r6 = c2[32:]
 
 
-			c1_exp = ''.join(expansion(list(c1_l6)))
-			c2_exp = ''.join(expansion(list(c2_l6)))
-			l6_xor = ''.join(xor(c1_l6,c2_l6))
-			r6_xor = ''.join(xor(list(c1_r6),list(c2_r6)))
-			permutation_out = xor(list(r6_xor),convert_xor_to_input(l5_XOR))
-			sbox_input_xor = ''.join(xor(c1_exp,c2_exp))
+			c1_exp = ''.join(expansion(list(c1_l6)))  	#to compute e(r5)
+			c2_exp = ''.join(expansion(list(c2_l6)))  	#to comput e(r5')
+			l6_xor = ''.join(xor(c1_l6,c2_l6))					
+			r6_xor = ''.join(xor(c1_r6,c2_r6))
+			# permutation_out = xor(r6_xor),convert_xor_to_input(l5_XOR))
+			permutation_out = list(r6_xor)  			#will consider only appropriate 20 bits
+			sbox_input_xor = ''.join(xor(c1_exp,c2_exp)) 
 			sbox_output_xor = ''.join(inverse_permute(permutation_out))
 
 
