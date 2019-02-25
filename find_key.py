@@ -89,19 +89,20 @@ def divide_input_and_output():
 			outputxor_list = [ line_out[j:j+4] for j in range(0,len(line_out)-1,4)]
 			# print(inputxor_list)
 			# print(outputxor_list)
-			r3 = line_r5[:48]
+			r5 = line_r5[:48]
 			#print(r5)
 			
 			sbox = 1
 			for input_xor,output_xor in zip(inputxor_list,outputxor_list):
 				# print(sbox)
-				output_pairs = output_possibilities(output_xor)
-				input_pairs = input_xor_possibilities(input_xor, output_pairs, sbox)
-				# print(len(input_pairs))
+				if sbox !=1 or sbox!= 3 or sbox!= 4:
+					output_pairs = output_possibilities(output_xor)
+					input_pairs = input_xor_possibilities(input_xor, output_pairs, sbox)
+					# print(len(input_pairs))
 
-				# if count < 10 :
-					# print(count)
-				find_key_possibilities(input_pairs, r3, sbox)
+					# if count < 10 :
+						# print(count)
+					find_key_possibilities(input_pairs, r5, sbox)
 
 					# count+=1
 				sbox+=1
