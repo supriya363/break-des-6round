@@ -33,7 +33,7 @@ def compute_sbox_xor():
 	if os.path.isfile('finalcipher.txt'):
 		f_in = open('finalcipher.txt','r')
 		f_out = open('cipherxor.txt','w')
-		f_exp = open('expandr5.txt','w')
+		f_exp = open('expandr3.txt','w')
 		f_sbox_inp = open('inputxor.txt','w')
 		f_sbox_out = open('outputxor.txt','w')
 		for line in f_in:

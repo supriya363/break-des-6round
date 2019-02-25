@@ -179,6 +179,20 @@ def roundTest2():
 	# res = xor(res, rightXor)
 	return convert_input_to_xor(res)
 
+def roundTest3():
+	# res = final_permutation(convert_xor_to_input("0080820060000000"))
+	# print(convert_input_to_xor(res))
+	# res = initial_permutation(convert_xor_to_input("0004000000808014"))
+	# print(convert_input_to_xor(res))
+	# initial_xor = convert_xor_to_input("60000000")
+	# res = expansion(initial_xor)
+	# res = convert_xor_to_input("E0000000")
+	# res = convert_input_to_xor(permute(res))
+	res = convert_xor_to_input("00540000")
+	perm = inverse_permute(res)
+
+	return perm
+
 
 
 def testProg():
@@ -196,8 +210,8 @@ def testProg():
 def convBitList2Int(bitList):
     return int("".join(str(i) for i in bitList),2)
 
-
-
+print(convert_input_to_xor(roundTest3()))
+# print(roundTest3())
 # print(roundTest2())
 # getinputXor("00808200","60000000")
 

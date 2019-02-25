@@ -78,17 +78,18 @@ def divide_input_and_output():
 	if os.path.isfile('inputxor.txt') and os.path.isfile('outputxor.txt'):
 		f_inp = open('inputxor.txt','r')
 		f_out = open('outputxor.txt','r')
-		f_r5 = open('expandr5.txt','r')
+		f_r5 = open('expandr3.txt','r')
 		
 		inputxor_list = []
 		outputxor_list = []
+		# count = 1
 		for line_inp, line_out, line_r5 in zip(f_inp,f_out, f_r5):
 			j = 0
 			inputxor_list = [ line_inp[i:i+6] for i in range(0,len(line_inp)-1,6)]
 			outputxor_list = [ line_out[j:j+4] for j in range(0,len(line_out)-1,4)]
 			# print(inputxor_list)
 			# print(outputxor_list)
-			r5 = line_r5[:48]
+			r3 = line_r5[:48]
 			#print(r5)
 			
 			sbox = 1
@@ -97,7 +98,12 @@ def divide_input_and_output():
 				output_pairs = output_possibilities(output_xor)
 				input_pairs = input_xor_possibilities(input_xor, output_pairs, sbox)
 				# print(len(input_pairs))
-				find_key_possibilities(input_pairs, r5, sbox)
+
+				# if count < 10 :
+					# print(count)
+				find_key_possibilities(input_pairs, r3, sbox)
+
+					# count+=1
 				sbox+=1
 
 	else:
@@ -115,9 +121,10 @@ def make_key_list():	# Returns list of all possible 64 keys[6 bits]
 
 def find_key_possibilities(input_pairs, r5, sbox):
 	f_key = open('keyset'+str(sbox)+'.txt','w+')
+	print(len(input_pairs))
 	for i in range(len(input_pairs)):
 		key_list[sbox-1][int(''.join(xor(input_pairs[i][0], r5[(sbox-1)*6:(sbox-1)*6+6])),2)][1] += 1	# xor of 6 bits of key and corresponding S-box input
-	
+		print(key_list[sbox-1][int(''.join(xor(input_pairs[i][0], r5[(sbox-1)*6:(sbox-1)*6+6])),2)][0])
 	for i in range(64):
 		f_key.write(str(key_list[sbox-1][i][0])+':'+str(key_list[sbox-1][i][1]))
 		f_key.write("\n")

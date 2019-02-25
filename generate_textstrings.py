@@ -4,11 +4,11 @@ import sys
 import os
 
 input_set = ['f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u']
-left_xor = ['0000','0000','0000','0000','1001','0000','0001','0000']  #00009010
-right_xor = ['0001','0000','0000','0000','0101','0000','0000','0000'] #10005000
+left_xor = ['0000','0000','0000','0100','0000','0000','0000','0000']  #00009010  #0040000
+right_xor = ['0000','0000','1000','0000','1000','0000','0001','0100'] #10005000  #00808014
 bit_set = ['0000','0001','0010','0011','0100','0101','0110','0111','1000','1001','1010','1011','1100','1101','1110','1111']
 alphabet_map = {}
-R5XOR = "405A0000" #Not required
+
 
 def create_alphabet_map():
 	global alphabet_map
@@ -46,42 +46,48 @@ def input_pairs():
 		os.remove('input.txt')
 
 	f = open('input.txt','w+')
-	f2 = open('input2.txt', 'w+')
-	f3 = open('input3.txt', 'w+')
+	# f2 = open('input2.txt', 'w+')
+	# f3 = open('input3.txt', 'w+')
 	count = 0
 	for p in itertools.product(input_set, repeat=8):
-		if(count < 150000):            # change the '1000000' to the number of pairs of plaintext needed.
+		if(count < 10000):            # change the '1000000' to the number of pairs of plaintext needed.
 		#f.write("ffffffff"+''.join(p)+",")
-			if count < 50000:
-				f.write(''.join(p)+''.join(p)+",\n")
-				#f.write(generate_pair("ffffffff"+''.join(p)))
-				f.write(generate_pair(''.join(p)+''.join(p)))
-				f.write(",\n")
+			# if count < 50000:
+			# 	f.write(''.join(p)+''.join(p)+",\n")
+			# 	#f.write(generate_pair("ffffffff"+''.join(p)))
+			# 	f.write(generate_pair(''.join(p)+''.join(p)))
+			# 	f.write(",\n")
 
-			elif count < 100000:
-				f2.write(''.join(p)+''.join(p)+",\n")
-				#f.write(generate_pair("ffffffff"+''.join(p)))
-				f2.write(generate_pair(''.join(p)+''.join(p)))
-				f2.write(",\n")
-			else:
-				f3.write(''.join(p)+''.join(p)+",\n")
-				#f.write(generate_pair("ffffffff"+''.join(p)))
-				f3.write(generate_pair(''.join(p)+''.join(p)))
-				f3.write(",\n")
-			count += 1    
+			# elif count < 100000:
+			# 	f2.write(''.join(p)+''.join(p)+",\n")
+			# 	#f.write(generate_pair("ffffffff"+''.join(p)))
+			# 	f2.write(generate_pair(''.join(p)+''.join(p)))
+			# 	f2.write(",\n")
+			# else:
+			# 	f3.write(''.join(p)+''.join(p)+",\n")
+			# 	#f.write(generate_pair("ffffffff"+''.join(p)))
+			# 	f3.write(generate_pair(''.join(p)+''.join(p)))
+			# 	f3.write(",\n")
+			count += 1 
+			f.write(''.join(p)+''.join(p)+",\n")
+			# 	#f.write(generate_pair("ffffffff"+''.join(p)))
+			f.write(generate_pair(''.join(p)+''.join(p)))
+			f.write(",\n")
+
 			
 		# raise SystemExit
 		else:
 			break
 
 	f.close()
-	f2.close()
-	f3.close()
+	# f2.close()
+	# f3.close()
+
 
 
 def convert_responsefile_to_cipher():
-	if os.path.isfile('Responsefile.txt'):
-		f1 = open('Responsefile.txt','r')
+	if os.path.isfile('response.txt'):
+		f1 = open('response.txt','r')
 		f2 = open('cipherpair.txt','w+')
 		flag = 0
 		for line in f1:
@@ -128,6 +134,8 @@ def convert_pairs_to_bitstring(flag):
 
 #PHASE 1   
 input_pairs()
+
+
 
 # PHASE 2 - After creation of Responsefile.txt
 # convert_responsefile_to_cipher()

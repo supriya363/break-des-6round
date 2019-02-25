@@ -8,7 +8,7 @@ headers = {'Content-type':'application/json',
              'Referer':'https://172.27.26.163:9999/game/caves.swf'}
 
 f = open('input.txt')
-r = open('Responsefile.txt','w')
+f2 = open('response.txt','w+')
 data = '{"password":"555acfd4d3c1b7a398d71e4c1538ad4d","teamname":"Amalgam","plaintext":"password"}'
 data = json.loads(data);
 cipherTexts = []
@@ -22,14 +22,14 @@ for line in f.readlines():
         count+=1
         # cipherPlain = "{0},{1}\n".format(data["plaintext"], response["ciphertext"])
         cipherPlain = "{0}\n".format(response["ciphertext"])
-        w.write(cipherPlain)
+        f2.write(cipherPlain)
         # cipherTexts.append(cipherPlain)
     else:
         print("Failed");
 f.close()
-f.close()
+
 # print(cipherTexts[0])
 
 # r = open('Responsefile.txt','w')
 # r.writelines(cipherTexts)
-r.close()
+f2.close()

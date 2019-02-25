@@ -1,5 +1,5 @@
-from des import *
-from find_key import *
+# from des import *
+# from find_key import *
 import os
 
 PC1 = [57, 49, 41, 33, 25, 17, 9, 1,
@@ -20,7 +20,7 @@ PC2 = [14, 17, 11, 24, 1, 5, 3, 28,
 missing_bit = [9, 18, 22, 25, 35, 38, 43, 54]		# The locations of missing bits that were not used in PC2
 
 ## To be used for Decryption (temporarily)
-key48 = [1] * 48
+key48 = [0] * 24 + [1] * 24
 
 # Right rotate list 'l' by 'n' elements
 def rotate(l, n):				
@@ -60,7 +60,7 @@ def generate256keys():
 			key56[missing_bit[j]-1] = int(res[i][j])
 		keys_list.append(key56.copy())
 	# print(keys_list)
-	return keys_list		
+	return keys_list		#returns a list of 56 bit keys [each key being in the form of bit list]		
 
 
 def round1Key():
@@ -73,9 +73,9 @@ def round2Key():
 	for key in keys_list:
 		key_left = key[:28]
 		key_right = key[28:]
-		rotate(key_left, 2)
-		rotate(key_right, 2)
-		res = key_left + key_right
+		res_left = rotate(key_left, 2)
+		res_right = rotate(key_right, 2)
+		res = res_left + res_right
 
 		round_key = [0] * 48
 		k = 0
@@ -91,9 +91,9 @@ def round3Key():
 	for key in keys_list:
 		key_left = key[:28]
 		key_right = key[28:]
-		rotate(key_left, 4)
-		rotate(key_right, 4)
-		res = key_left + key_right
+		res_left = rotate(key_left, 4)
+		res_right = rotate(key_right, 4)
+		res = res_left + res_right
 
 		round_key = [0] * 48
 		k = 0
@@ -109,9 +109,9 @@ def round4Key():
 	for key in keys_list:
 		key_left = key[:28]
 		key_right = key[28:]
-		rotate(key_left, 6)
-		rotate(key_right, 6)
-		res = key_left + key_right
+		res_left = rotate(key_left, 6)
+		res_right = rotate(key_right, 6)
+		res = res_left + res_right
 
 		round_key = [0] * 48
 		k = 0
@@ -127,39 +127,41 @@ def round5Key():
 	for key in keys_list:
 		key_left = key[:28]
 		key_right = key[28:]
-		rotate(key_left, 8)
-		rotate(key_right, 8)
-		res = key_left + key_right
+		res_left = rotate(key_left, 8)
+		res_right = rotate(key_right, 8)
+		res = res_left + res_right
 
 		round_key = [0] * 48
 		k = 0
 		for j in PC2:
 			round_key[k] = res[j-1]
 			k += 1
-		round5_keylist.append(round_key)
+		round5_keylist.append(round_key)	
 	return round5_keylist
 
 def round6Key():
 	keys_list = generate256keys()
 	round6_keylist = []
 	for key in keys_list:
+		res = []
+		# print(key)
 		key_left = key[:28]
 		key_right = key[28:]
-		rotate(key_left, 9)
-		rotate(key_right, 9)
-		res = key_left + key_right
+		res_left = rotate(key_left, 9)
+		res_right = rotate(key_right, 9)
+		res = res_left + res_right
 
 		round_key = [0] * 48
 		k = 0
 		for j in PC2:
 			round_key[k] = res[j-1]
 			k += 1
-		round6_keylist.append(round_key)
+		round6_keylist.append(round_key.copy())	
 	return round6_keylist			
 
-round1Key()
-round2Key()
-round3Key()
-round4Key()
-round5Key()
-round6Key()
+# round1Key()
+# round2Key()
+# round3Key()
+# round4Key()
+# round5Key()
+# round6Key()
