@@ -4,6 +4,12 @@ import os
 import sys
 from collections import Counter
 
+thirtybit_keylist = []		# global list will store all the possibilities 
+
+key_list = []
+for i in range(8):
+	key_list.append(make_key_list())
+
 def getFrequencyOfKeys(thirtybit_keylist):
     # count = 0
     # thirty_bit_key = []
@@ -15,7 +21,7 @@ def getFrequencyOfKeys(thirtybit_keylist):
     #                     thiry_bits_key_str = key0 + key1 + key2 + key3 + key4;
     #                     thirty_bit_key.append(thiry_bits_key_str);
     #                     count += 1;
-    frequency_of_key = Counter(thirty_bit_key)
+    frequency_of_key = Counter(thirtybit_keylist)
     return frequency_of_key;
 
 def xor(input1, input2):
@@ -121,6 +127,7 @@ def divide_input_and_output():
 			inputxor_list = [ line_inp[i:i+6] for i in range(0,len(line_inp)-1,6)]
 			outputxor_list = [ line_out[j:j+4] for j in range(0,len(line_out)-1,4)]
 			r5 = line_r5[:48]
+			
 			sbox_keylist = []
 			sbox = 1
 			for input_xor,output_xor in zip(inputxor_list,outputxor_list):
@@ -129,10 +136,10 @@ def divide_input_and_output():
 					# print(sbox)
 					output_pairs = output_possibilities(output_xor)
 					input_pairs = input_xor_possibilities(input_xor, output_pairs, sbox)
-					if count < 6:
-						print(count)
-						sbox_keylist = find_key_possibilities(input_pairs, r5, sbox, sbox_keylist)
-					count+=1
+					# if count < 18:
+						# print(count)
+					sbox_keylist = find_key_possibilities(input_pairs, r5, sbox, sbox_keylist)
+					# count+=1
 				sbox+=1
 	else:
 		print("No input file found here\n")
@@ -153,30 +160,37 @@ def findKey30(keys_of_sboxes):
 
 def find_key_possibilities(input_pairs, r5, sbox, sbox_keylist):
 	f_key = open('keyset'+str(sbox)+'.txt','w+')
-	print(len(input_pairs))
+	# print(len(input_pairs))
 
 	res = []
 	for i in range(len(input_pairs)):
 		res.append(''.join(xor(input_pairs[i][0], r5[(sbox-1)*6:(sbox-1)*6+6])))
-	print(res)		# res stores 6 bit key possibilty for 'sbox' passed 
+	# print(res)		# res stores 6 bit key possibilty for 'sbox' passed 
+	
 	sbox_keylist.append(res)		# list having possible keys from all 5 sbox 
-	print("\n")
-	print(sbox_keylist)
+	# print("\n")
+	# print(sbox_keylist)
 
 	if sbox == 8:
-		tmp_list = findKey30(sbox_keylist)
-		for i in tmp_list:
-			thirtybit_keylist.append(i)		# In thirtybit_keylist count the frequency 
+		flag = 0 
+		for i in sbox_keylist:
+			if not i:
+				# print("one of the input is empty")
+				flag = 1
+				break
+
+		if flag != 1:
+			tmp_list = findKey30(sbox_keylist)
+			for i in tmp_list:
+				thirtybit_keylist.append(i)		# In thirtybit_keylist count the frequency 
 	f_key.close()
 	return sbox_keylist				
 
-thirtybit_keylist = []
-key_list = []
-for i in range(8):
-	key_list.append(make_key_list())
 
 divide_input_and_output()
+for i in thirtybit_keylist:
+	print(i)
 
-# frequency_of_keys.most_common()
-# frequency_of_keys = getFrequencyOfKeys(thirtybit_keylist)
-# print(frequency_of_keys)
+# print(thirtybit_keylist)
+frequency_of_keys = getFrequencyOfKeys(thirtybit_keylist)
+print(frequency_of_keys)
