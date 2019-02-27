@@ -15,8 +15,12 @@ def reverse_permute():
 				# diff = get_diff_of_cipherpair(line_out[:64],line_out[65:-1])[:32]
 				c1 = line[:64]
 				c2 = line[65:-1]
+				# print("Bit String representation of cipher 1: {0}\n".format(c1))
+				# print("Bit String representation of cipher 2: {0}\n".format(c2))
 				c1_rev = ''.join(initial_permutation(list(c1)))  
-				c2_rev = ''.join(initial_permutation(list(c2))) 
+				c2_rev = ''.join(initial_permutation(list(c2)))
+				# print("Reverse Permutation of cipher 1: {0}\n".format(c1_rev))
+				# print("Reverse Permutation of cipher 2: {0}\n".format(c2_rev)) 
 				f_out.write(c1_rev + ' ' + c2_rev+ '\n') 
 			f_in.close()
 			f_out.close()
@@ -44,7 +48,7 @@ def compute_sbox_xor():
 			c2_l6 = c2[:32]
 			c2_r6 = c2[32:]
 
-
+			# print("".format())
 			c1_exp = ''.join(expansion(list(c1_l6)))  	#to compute e(r5)
 			c2_exp = ''.join(expansion(list(c2_l6)))  	#to comput e(r5')
 			l6_xor = ''.join(xor(c1_l6,c2_l6))					

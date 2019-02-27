@@ -6,30 +6,40 @@ import os
 input_set = ['f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u']
 #input xor required 0000801000004000
 left_xor = ['0000','0000','0000','0000','1000','0000','0001','0000']  #00008010 
-right_xor = ['0000','0000','0000','0000','0100','0000','0000','0000'] #00004000 
+right_xor = ['0000','0000','0000','0000','0100','0000','0000','0000'] #00004000
+
+#input xor required for 2nd trail
+# left_xor = ['0000','0000','0000','0000','1000','0000','0001','0000']  #00008010 
+# right_xor = ['0000','0000','0000','0000','0100','0000','0000','0000'] #00004000
+
 bit_set = ['0000','0001','0010','0011','0100','0101','0110','0111','1000','1001','1010','1011','1100','1101','1110','1111']
 alphabet_map = {}
 
 
-def create_alphabet_map():
+
+
+def create_alphabet_map(start):
 	global alphabet_map
-	k=0
+	k=start
 	for i in input_set:
 		alphabet_map[i]=bit_set[k]
-		k+=1
+		k = (k+1)%16
 
 # Finds the corresponding input having the required xor difference
-# inp is in the form - "8 chars"
-def findPair(inp, xor):     
-    res = []
-    tmp = list(inp)
-    # print(tmp)
-    for i in range(len(tmp)):
-        x = bin(int(binvalue(tmp[i],8), 2) - int(binvalue("f",8),2))[2:]
-        y = int(x,2) ^ int(xor[i],2)
-        res.append(input_set[y])
-    res = ''.join(res)
-    return res
+# # inp is in the form - "8 chars"
+# def findPair(inp, xor):     
+#     res = []
+#     tmp = list(inp)
+#     # print(tmp)
+#     for i in range(len(tmp)):
+#         x = bin(int(binvalue(tmp[i],8), 2) - int(binvalue("f",8),2))[2:]
+#         y = int(x,2) ^ int(xor[i],2)
+#         res.append(input_set[y])
+#     res = ''.join(res)
+#     return res
+
+def findPair(inp, xor):
+	
 
 # Returns the plaintext for the entered plaintext maintaining xor difference
 # inp will be in the form - "16 chars : {L_0R_0}"
@@ -106,15 +116,18 @@ def convert_pairs_to_bitstring(flag):
 	f2.close()
 
 #Generate Pairs  
-
+create_alphabet_map(1)
+print(alphabet_map)
 #PHASE 1   
-# input_pairs()
+input_pairs()
 
 
 
 # PHASE 2 - After creation of Responsefile.txt
 convert_responsefile_to_cipher()
-create_alphabet_map()
+create_alphabet_map(1)
+print(alphabet_map)
+# create_alphabet_map()
 convert_pairs_to_bitstring('c')
 
 

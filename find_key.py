@@ -112,8 +112,7 @@ def divide_input_and_output():
 		inputxor_list = []
 		outputxor_list = []
 		count = 1
-		for line_inp, line_out, line_r5 in zip(f_inp,f_out, f_r5):
-			j = 0
+		for line_inp, line_out, line_r5 in zip(f_inp,f_out, f_r5): #line_inp = inputxor, line_out = outputxor
 			inputxor_list = [ line_inp[i:i+6] for i in range(0,len(line_inp)-1,6)]
 			outputxor_list = [ line_out[j:j+4] for j in range(0,len(line_out)-1,4)]
 			r5 = line_r5[:48]
