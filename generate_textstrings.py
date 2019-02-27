@@ -38,7 +38,25 @@ def create_alphabet_map(start):
 #     res = ''.join(res)
 #     return res
 
-def findPair(inp, xor):
+def findPair(inp, xor_list):
+	# print(inp)
+	tmp_list = list(inp)
+	plaintext2 = []
+	k = 0
+	for i in tmp_list:
+		t1 = list(alphabet_map[i])
+		t2 = list(xor_list[k])
+		# print(t1,t2)
+		xor_result = xor(t1, t2)
+		# print(xor_result)
+		for j in alphabet_map:
+			if alphabet_map[j] == (''.join(xor_result)):
+				plaintext2.append(j)
+				break
+		k += 1 
+	plaintext2 = ''.join(plaintext2)
+	# print("plaintext2",plaintext2)
+	return plaintext2	
 	
 
 # Returns the plaintext for the entered plaintext maintaining xor difference
@@ -116,17 +134,17 @@ def convert_pairs_to_bitstring(flag):
 	f2.close()
 
 #Generate Pairs  
-create_alphabet_map(1)
-print(alphabet_map)
+# create_alphabet_map(1)
+# print(alphabet_map)
+
 #PHASE 1   
-input_pairs()
+# input_pairs()
 
 
 
 # PHASE 2 - After creation of Responsefile.txt
 convert_responsefile_to_cipher()
-create_alphabet_map(1)
-print(alphabet_map)
+
 # create_alphabet_map()
 convert_pairs_to_bitstring('c')
 
