@@ -17,25 +17,50 @@ PC2 = [14, 17, 11, 24, 1, 5, 3, 28,
 	51, 45, 33, 48, 44, 49, 39, 56,
 	34, 53, 46, 42, 50, 36, 29, 32]
 
-missing_bit = [9, 18, 22, 25, 35, 38, 43, 54]		# The locations of missing bits that were not used in PC2
+missing_bit = [9, 18, 22, 25, 35, 38, 43, 54, 23, 19, 12, 4, 26, 8]		# The locations of missing bits that were not used in PC2
+missing_keybits = [23, 19, 12, 4, 26, 8]
 
-## To be used for Decryption (temporarily)
-key48 = [0] * 24 + [1] * 24
+## Final key 42 bit
+key42 = '000000000000000000111111111111111111000000' 
+# print(key42)    
+key42 = list(key42)
+# print(key42)
+key48 = key42[:12] + ['0'] * 6 + key42[12:]
+# print(key48)
 
 # Right rotate list 'l' by 'n' elements
 def rotate(l, n):				
     return l[28-n:] + l[:28-n]
 
+# returns possible 48 bit key lists
+# def brute_forceKey48():
+# 	res = []
+# 	key48_list = []
+# 	for i in range(64):		
+# 		tmp=bin(i)[2:]
+# 		while len(tmp) < 6:
+# 			tmp = "0" + tmp
+# 		res.append(list(tmp))
+# 	# print(res)
+# 	tmp_key48 = key42[:12] + [0]*6 + key42[12:]
+# 	print("tmp key48 is ",tmp_key48)
+# 	for i in range(len(res)):
+# 		for j in range(len(res[i])):
+# 			tmp_key48[missing_Sboxbits[j]-1] = res[i][j]
+# 			key48_list.append(tmp_key48.copy())
+
+# 	print("\n",key48_list)		
+# 	return key48_list		
 
 # Generate possible values for the missing bits
 def generate_bruteforce_values():      
 	res = []
-	for i in range(256):
+	for i in range(16384):		# 2^ 14
 		tmp=bin(i)[2:]
-		while len(tmp) < 8:
+		while len(tmp) < 14:
 			tmp = "0" + tmp
 		res.append(list(tmp))
-	# print(res)
+	# print(res[0])
 	return res
 
 
@@ -47,19 +72,16 @@ def findKey56(key48):
 		k += 1
 	return key56	
 
-#NOTE : If more than one majority keys are found then we have to pass every value in this function and then
-# 		generate the 256 possibilities of key
-
-# Generate all possible 256 keys( having 56 bits)
-def generate256keys():			
+# Generate all possible 56 bit keys
+def generate_56bit_keylist():			
 	key56 = findKey56(key48)		# key56 is a bitlist with missing bits as 0
 	keys_list = []
 	res = generate_bruteforce_values()
 	for i in range(len(res)):
 		for j in range(len(res[i])):
-			key56[missing_bit[j]-1] = int(res[i][j])
+			key56[missing_bit[j]-1] = res[i][j]
 		keys_list.append(key56.copy())
-	# print(keys_list)
+	# print(keys_list[0])
 	return keys_list		#returns a list of 56 bit keys [each key being in the form of bit list]		
 
 
@@ -68,7 +90,7 @@ def round1Key():
 	return round1_keylist
 
 def round2Key():
-	keys_list = generate256keys()
+	keys_list = generate_56bit_keylist()
 	round2_keylist = []
 	for key in keys_list:
 		key_left = key[:28]
@@ -86,7 +108,7 @@ def round2Key():
 	return round2_keylist
 
 def round3Key():
-	keys_list = generate256keys()
+	keys_list = generate_56bit_keylist()
 	round3_keylist = []
 	for key in keys_list:
 		key_left = key[:28]
@@ -104,7 +126,7 @@ def round3Key():
 	return round3_keylist	
 
 def round4Key():
-	keys_list = generate256keys()
+	keys_list = generate_56bit_keylist()
 	round4_keylist = []
 	for key in keys_list:
 		key_left = key[:28]
@@ -122,7 +144,7 @@ def round4Key():
 	return round4_keylist	
 
 def round5Key():
-	keys_list = generate256keys()
+	keys_list = generate_56bit_keylist()
 	round5_keylist = []
 	for key in keys_list:
 		key_left = key[:28]
@@ -140,7 +162,7 @@ def round5Key():
 	return round5_keylist
 
 def round6Key():
-	keys_list = generate256keys()
+	keys_list = generate_56bit_keylist()
 	round6_keylist = []
 	for key in keys_list:
 		res = []
@@ -165,3 +187,5 @@ def round6Key():
 # round4Key()
 # round5Key()
 # round6Key()
+
+# generate_56bit_keylist()
