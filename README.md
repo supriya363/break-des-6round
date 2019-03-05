@@ -4,7 +4,7 @@ Breaking 6 round DES using chosen plaintext attack
 To run: 
 #PHASE 1 : Go to generate_textstring.py
 #Uncomment the following code to run Phase 1 - generate input pairs
-# input_pairs()
+#input_pairs()
 
 #PHASE 2 - Run Response.py to get ciphertexts of the input pairs
 
