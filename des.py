@@ -19,7 +19,7 @@ def expansion(ri):  #ri is an array of bits = b0,b1,b2...b31
 	res.append(ri[0])
 	return res
 
-#Should return bit array
+
 def substitute(ei):
     outputOfSBox = ''
     for i in range(0,8):
@@ -100,7 +100,7 @@ def convert_input_to_xor(inp):   # Converts 32bit input to xor (e.g. 0405C000)
         res.append(binaryToHex(inp[i:i+4]))
     return ''.join(res)
 
-def round(li, ri, no_of_rounds):
+def round(li, ri, no_of_rounds):   #For testing
 	for rnd in range(no_of_rounds):
 		print("----------------------Round---------------------- : %d\n" % (rnd+1))
 		print("Lefthalf: "+ str(li) + "\nRighthalf: " + str(ri))
@@ -119,7 +119,7 @@ def round(li, ri, no_of_rounds):
 		li = ri
 		ri = xor_with_lefthalf
 
-def getinputXor(leftXOR,rightXOR):
+def getinputXor(leftXOR,rightXOR):  #For Testing
 
 	left = convert_xor_to_input(leftXOR)
 	right = convert_xor_to_input(rightXOR)
@@ -138,7 +138,7 @@ def binvalue(val, bitsize): #Return the binary value as a string of the given si
 
 
 
-def roundTest():
+def roundTest():  #For Testing
 	l = list("abcd") #64bits
 	r = list("efgh")
 	bval_l = [ binvalue(i,8) for i in l]
@@ -160,7 +160,7 @@ def roundTest():
 	print("Input: " + str(bitarr_l)+str(bitarr_r))
 	round(bitarr_l, bitarr_r, 2)
 
-def roundTest2():
+def roundTest2(): #For Testing
 	rightXorstr = "E2E3C7D9EA814C92"
 	# leftXorstr = "405C0000"
 	rightXor = convert_xor_to_input(rightXorstr)
@@ -181,7 +181,7 @@ def roundTest2():
 	# res = xor(res, rightXor)
 	return convert_input_to_xor(res)
 
-def roundTest3():
+def roundTest3(): #For Testing
 	# res = final_permutation(convert_xor_to_input("0080820060000000"))
 	# print(convert_input_to_xor(res))
 	# res = initial_permutation(convert_xor_to_input("0004000000808014"))
@@ -198,7 +198,7 @@ def roundTest3():
 
 
 
-def testProg():
+def testProg(): #For Testing
 	inp = list("abcd") #32bits
 	bval = [ binvalue(i,8) for i in inp]
 	out = []
@@ -215,6 +215,6 @@ def convBitList2Int(bitList):
 
 # print(convert_input_to_xor(roundTest3()))
 # print(roundTest3())
-print(roundTest2())
+# print(roundTest2())
 # getinputXor("00808200","60000000")
 

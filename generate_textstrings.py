@@ -2,15 +2,17 @@ from des import *
 import itertools
 import sys
 import os
+import string
+import random
 
 input_set = ['f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u']
-#input xor required 0000801000004000
+
+#input xor required for 1st trial 0000801000004000
 left_xor = ['0000','0000','0000','0000','1000','0000','0001','0000']  #00008010 
 right_xor = ['0000','0000','0000','0000','0100','0000','0000','0000'] #00004000
 
 #input xor required for 2nd trail
-# left_xor = ['0000','0000','0000','0000','1000','0000','0001','0000']  #00008010 
-# right_xor = ['0000','0000','0000','0000','0100','0000','0000','0000'] #00004000
+
 
 bit_set = ['0000','0001','0010','0011','0100','0101','0110','0111','1000','1001','1010','1011','1100','1101','1110','1111']
 alphabet_map = {}
@@ -25,37 +27,21 @@ def create_alphabet_map(start):
 		alphabet_map[i]=bit_set[k]
 		k = (k+1)%16
 
-# Finds the corresponding input having the required xor difference
-# # inp is in the form - "8 chars"
-# def findPair(inp, xor):     
-#     res = []
-#     tmp = list(inp)
-#     # print(tmp)
-#     for i in range(len(tmp)):
-#         x = bin(int(binvalue(tmp[i],8), 2) - int(binvalue("f",8),2))[2:]
-#         y = int(x,2) ^ int(xor[i],2)
-#         res.append(input_set[y])
-#     res = ''.join(res)
-#     return res
 
 def findPair(inp, xor_list):
-	# print(inp)
 	tmp_list = list(inp)
 	plaintext2 = []
 	k = 0
 	for i in tmp_list:
 		t1 = list(alphabet_map[i])
 		t2 = list(xor_list[k])
-		# print(t1,t2)
 		xor_result = xor(t1, t2)
-		# print(xor_result)
 		for j in alphabet_map:
 			if alphabet_map[j] == (''.join(xor_result)):
 				plaintext2.append(j)
 				break
 		k += 1 
 	plaintext2 = ''.join(plaintext2)
-	# print("plaintext2",plaintext2)
 	return plaintext2	
 	
 
@@ -66,25 +52,28 @@ def generate_pair(inp):
     R_10 = inp[8:]
     L_20 = findPair(L_10, left_xor)
     R_20 = findPair(R_10, right_xor)
-    # print(inp)
     return L_20 + R_20        
 
-# Storing the plaintext pairs in the file 'input.txt' in the form 'plaintext1,plaintext2'
+def gen_random_str(character_set, size):
+    random_str = ''
+    for i in range(size):
+        character = random.choice(character_set)
+        random_str += character
+    return random_str
+
+
 def input_pairs():
 	if os.path.isfile('input.txt'):
 		os.remove('input.txt')
 
 	f = open('input.txt','w+')
 	count = 0
-	for p in itertools.product(input_set, repeat=8):
-		if(count < 2000):       
-			count += 1 
-			f.write(''.join(p)+''.join(p)+",\n")
-			f.write(generate_pair(''.join(p)+''.join(p)))
-			f.write(",\n")
-		else:
-			break
-
+	while count < 500:
+		plaintext1 = gen_random_str(input_set, 16)
+		f.write(plaintext1+",\n")
+		plaintext2 = generate_pair(plaintext1)
+		f.write(plaintext2 + ",\n")
+		count+=1
 	f.close()
 
 
@@ -133,20 +122,25 @@ def convert_pairs_to_bitstring(flag):
 	f1.close()
 	f2.close()
 
-#Generate Pairs  
-# create_alphabet_map(1)
-# print(alphabet_map)
+create_alphabet_map(0)
 
-#PHASE 1   
+#--------------Order to run -------------------#
+
+#PHASE 1 
+#Uncomment the following code to run Phase 1 - generate input pairs
 # input_pairs()
 
+#PHASE 2 - Run Response.py to get ciphertexts of the input pairs
 
-
-# PHASE 2 - After creation of Responsefile.txt
+#PHASE 3 - Uncomment the following lines
 convert_responsefile_to_cipher()
-
-# create_alphabet_map()
 convert_pairs_to_bitstring('c')
+
+#PHASE 4 - compute the input output xors into the sboxes in the last round
+#Run compute_input_output_xor.py in order to do this
+
+#PHASE 5 - Find key possibilities by running find_key.py
+
 
 
 
