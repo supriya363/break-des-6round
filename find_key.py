@@ -137,7 +137,7 @@ def divide_input_and_output():
 def findKey30(keys_of_sboxes):
 	count = 0
 	thirty_bit_key = []
-	print(keys_of_sboxes)
+	# print(keys_of_sboxes)
 	for key0 in keys_of_sboxes[0]:
 		for key1 in keys_of_sboxes[1]:
 			for key2 in keys_of_sboxes[2]:
